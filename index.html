@@ -1,0 +1,263 @@
+<html lang="ru">
+    <head>
+        <title>Lab 1</title>
+        <script src="scripts/jquery-3.6.0.min.js"></script>
+        <meta charset="UTF-8">
+        <style>
+          body {
+              font-family: fantasy, sans-serif;
+              margin: 0;
+              background-color: whitesmoke;
+          }
+
+          header {
+              background-color: #2d1e2f;
+              height: 70px;
+              width: 100%;
+              position: fixed;
+              top: 0px;
+              left: 0px;
+          }
+
+          #task-link {
+              text-decoration: none;
+              color: white;
+          }
+
+          #task-link:hover {
+            color:rgb(216, 216, 216)
+          }
+
+          #task-link:active {
+              color: rgb(184, 184, 184)
+          }
+
+          .header-content {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              height: 100%;
+              width: 67%;
+              margin: auto;
+          }
+
+          header div {
+              color: white;
+              font-size: 1.5em;
+          }
+
+          form {
+              margin-top: 70px;
+          }
+
+          .content {
+              width: 75%;
+              margin-left: auto;
+              margin-right: auto;
+          }
+
+          #graphic {
+              border: #70c1b3 solid 4px;
+              border-radius: 20px;
+              padding: 10px;
+              float: right;
+          }
+
+          td {
+              padding: 10px;
+          }
+
+          .hidden {
+              display: none;
+          }
+
+          .not-valid {
+              box-shadow: inset 0 0 5px red, 0 0 5px red;
+              border-color: red !important;
+          }
+
+          input {
+              display: block;
+          }
+
+          .results {
+              width: 100%;
+          }
+
+          .form-table {
+            width: 100%;
+          }
+
+          .width-stop {
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+            padding:  0 40px;
+            background-color: white;
+            min-height: 100%;
+          }
+
+          .cascade {
+            width: 100%;
+          }
+
+          .form-table td {
+            font-size: 20px;
+            letter-spacing: 1px;
+          }
+
+          .input {
+            width: 100%;
+            padding: 5px;
+            border: 2px solid #247ba0;
+            border-radius: 10px;
+            outline: none;
+          }
+
+          .input:focus {
+            border-color: #2d1e2f;
+            border-radius: 10px;
+          }
+
+          button[type="button"] {
+            padding: 5px 20px;
+            border-radius: 10px;
+            border: 2px #247ba0 solid;
+          }
+
+          #send-form:hover {
+            cursor: pointer;
+            background-color: rgb(231, 231, 231);
+          }
+
+          #send-form:active {
+            background-color: rgb(209, 209, 209);
+          }
+
+          .invalid-data {
+            width: 94%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2px 5px;
+            background-color: red;
+            color: white;
+          }
+
+          .middle-col {
+            width: 40%;
+          }
+
+          .results th {
+            background-color: #70c1b3;
+            padding: 10px 15px;
+            color: white;
+            text-shadow: 0 2px 1px grey;
+            letter-spacing: 1px;
+          }
+
+          .results td {
+            background-color: #ffe066;
+            color: #2d1e2f;
+          }
+
+          .results tr:first-child th:first-child {
+            border-top-left-radius: 10px;
+          }
+
+          .results tr:first-child th:last-child {
+            border-top-right-radius: 10px;
+          }
+
+          .results tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+          }
+          
+          .results tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+          }
+
+          .results caption {
+            font-size: 25px;
+            color: #2d1e2f;
+          }
+        </style>
+
+    </head>
+<body>
+  
+<header>
+  <div class="header-content">
+    <div class="var_num"><a id="task-link" href="task.html" target="_blank">№31005</a></div>
+    <div class="author">Вахрушев Данил Сергеевич</div>
+    <div class="group_num">P3231</div>
+  </div>
+</header>
+
+<div class="width-stop">
+  <table class="cascade">
+    <tr>
+      <td>
+        <form>
+          <table class="form-table">
+            <tr>
+              <td>Изменение X: </td>
+              <td class="middle-col">
+                <input class="input" id="x-cord-input" type="text" placeholder="Введите число от -5 до 3"/>
+                <div class="invalid-data hidden">Неверная координата</div>
+              </td>
+              <td rowspan="4"><img id="graphic" src="img/areas.png"/></td>
+            </tr>
+            <tr>
+              <td>Изменение Y: </td>
+              <td>
+                <select id="y-selection" class="input">
+                  <option>-5</option>
+                  <option>-4</option>
+                  <option>-3</option>
+                  <option>-2</option>
+                  <option>-1</option>
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Изменение R: </td>
+              <td>
+                <input type="text" id="radius-input" class="input" placeholder="Введите число от 2 до 5"/>
+                <div class="invalid-data hidden" >Неверный радиус</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button type="button" id='send-form'>Проверить</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class="results hidden">
+          <caption>Результаты</caption>
+          <tr>
+            <th>X координата</th>
+            <th>Y координата</th>
+            <th>Радиус</th>
+            <th>Текущая дата</th>
+            <th>Время выполнения скрипта</th>
+            <th>Попадание</th> 
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<script src="scripts/data-validation.js"></script>
+</body>
+</html>
