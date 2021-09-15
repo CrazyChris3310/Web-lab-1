@@ -3,18 +3,18 @@ $('#radius-input').on('input', getCheckFunction(checkRadius));
 $('#send-form').on('click', submitData);
 
 function checkRadius(val) {
-    return val > 5 || val < 2;
+    return val >=2 && val <= 5;
 }
 
 function checkCoordinate(val) {
-    return val > 5 || val < -3;
+    return val >= -5 && val <= 3;
 }
 
 function getCheckFunction(func) {
     return function(event) {
         let val = this.value;
         if (val != '' && Number.isInteger(Number(val))) {
-            if (func(val)) {
+            if (!func(val)) {
                 notValid(this);
             }
             else {
@@ -49,6 +49,8 @@ function submitData() {
     let time = calculateTimeOfsset(new Date().getTimezoneOffset() * -1)
 
     if (allValid) {
+
+        redraw_graphic();
         $.ajax({
             url: "index.php",
             type: "GET",
@@ -61,6 +63,18 @@ function submitData() {
         }).done(addIntoTable)
         .fail(processError);
     }
+}
+
+function redraw_graphic() {
+    let path = $('#graphic path');
+    let r = $('#radius-input').val();
+    let path_points = "M 150 " + (150 - r*25) + "\n A " + (r*25) +
+    " " + (r*25) + " 0 0 0 " + (150 - r*25) + " 150 " + "L 150 " +
+    (150 + r*25 / 2) + " L 150 150 L " + (150 + r*25/2) + 
+    " 150 L " + (150 +r*25/2) + " " + (150 - r*25) + " L 150 " +
+    (150 - r*25);  
+
+    path.attr("d", path_points);
 }
 
 function calculateTimeOfsset(time) {
@@ -89,7 +103,17 @@ function addIntoTable(json) {
         $('<td>').html(data[i]).appendTo(row);
     }
     $(row).insertAfter($('table.results tr').eq(0));
-    
+    draw_point();
+
+}
+
+function draw_point() {
+    let circle = $('#graphic circle');
+    if (circle.is('.hidden'))
+        circle.removeClass('hidden');
+
+    circle.attr("cx", 150 + $('#x-cord-input').val() * 25);
+    circle.attr("cy", 150 - $('#y-selection').val() * 25);
 }
 
 function processError(xhr, status, errorThrown) {
