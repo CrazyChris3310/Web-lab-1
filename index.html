@@ -1,132 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab 1</title>
-  <link rel="stylesheet" href="dist/styles.css">
-  <script src="scripts/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-  
-  <table class="cascade">
-    <tr id="head">
-      <td>
-        <table class="header content">
-          <tr>
-            <td><a href="task.html" target="_blank">№31005</a></td>
-            <td>Вахрушев Данил Сергеевич</td>
-            <td>P3231</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <form>
-          <table class="content form_body">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 1</title>
+    <script src="scripts/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        background-color: white;
+        font-family: fantasy, sans-serif;
+        margin: 0;
+      }
+
+      .cascade {
+        border-spacing: 0;
+        width: 100%;
+      }
+
+      #head {
+        background-color: #2d1e2f;
+        color: white;
+        font-size: 30px;
+        height: 70px;
+      }
+
+      .content {
+        width: 70%;
+        margin: auto;
+      }
+
+      .header {
+        text-align: center;
+      }
+      .header td:first-child {
+        text-align: left;
+      }
+      .header td:last-child {
+        text-align: right;
+      }
+      .header a {
+        text-decoration: none;
+        color: white;
+      }
+      .header a:hover {
+        color: #e4e4e4;
+      }
+
+      #graphic {
+        float: right;
+        border: 5px solid #70c1b3;
+        border-radius: 20px;
+        padding: 10px;
+      }
+
+      .results {
+        margin-bottom: 10px;
+      }
+      .results th {
+        background-color: #70c1b3;
+        padding: 10px 15px;
+        color: white;
+        text-shadow: 1px 2px grey;
+        letter-spacing: 1px;
+      }
+      .results td {
+        background-color: #ffe066;
+        padding: 10px 15px;
+        color: #2d1e2f;
+      }
+      .results tr:first-child th:first-child {
+        border-top-left-radius: 15px;
+      }
+      .results tr:first-child th:last-child {
+        border-top-right-radius: 15px;
+      }
+      .results tr:last-child td:first-child {
+        border-bottom-left-radius: 15px;
+      }
+      .results tr:last-child td:last-child {
+        border-bottom-right-radius: 15px;
+      }
+
+      .form_body {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+      .form_body tr td:nth-child(2) {
+        width: 40%;
+      }
+      .form_body tr td:first-child {
+        color: #2d1e2f;
+      }
+
+      .input {
+        width: 100%;
+        border: 2px solid #70c1b3;
+        border-radius: 15px;
+        padding: 5px;
+        outline: none;
+        box-sizing: border-box;
+      }
+      .input:focus {
+        border-color: #2d1e2f;
+      }
+
+      .invalid-data {
+        width: 90%;
+        margin: auto;
+        background-color: red;
+        color: white;
+        padding: 2px 5px;
+      }
+
+      .not-valid {
+        box-shadow: inset 0 0 5px red, 0 0 5px red;
+        border-color: red;
+      }
+      .not-valid:focus {
+        border-color: red;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      [type="button"] {
+        border: 2px solid #70c1b3;
+        border-radius: 15px;
+        padding: 5px 25px;
+        outline: none;
+      }
+      [type="button"]:hover {
+        background-color: #e4e4e4;
+        cursor: pointer;
+      }
+      [type="button"]:active {
+        background-color: lightgray;
+      }
+      [type="button"]:focus {
+        border-color: #2d1e2f;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="cascade">
+      <tr id="head">
+        <td>
+          <table class="header content">
             <tr>
-              <td>Значение X: </td>
-              <td>
-                <input class="input" id="x-cord-input" type="text" placeholder="Введите число от -5 до 3"/>
-                <div class="invalid-data hidden">Неверная координата</div>
-              </td>
-              <td rowspan="4">
-                <svg id="graphic" view-box="0 0 300 300"width="300" height="300" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="100%" height="100%" fill="white" />
-                  <line x1="0" x2="100%" y1="50%" y2="50%" stroke="black" stroke-width="2"/>
-                  <line x1="97%" x2="100%" y1="47%" y2="50%" stroke="black" stroke-width="2"/>
-                  <line x1="97%" x2="100%" y1="53%" y2="50%" stroke="black" stroke-width="2"/>
-              
-                  <line x1="50%" x2="50%" y1="0" y2="100%" stroke="black" stroke-width="2"/>
-                  <line x1="47%" x2="50%" y1="3%" y2="0" stroke="black" stroke-width="2"/>
-                  <line x1="53%" x2="50%" y1="3%" y2="0" stroke="black" stroke-width="2"/>
-              
-                  <line x1="25" x2="25" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="50" x2="50" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="75" x2="75" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="100" x2="100" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="125" x2="125" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="175" x2="175" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="200" x2="200" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="225" x2="225" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="250" x2="250" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-                  <line x1="275" x2="275" y1="51%" y2="49%" stroke="black" stroke-width="1"/>
-              
-                  <line x1="49%" x2="51%" y1="25" y2="25" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="50" y2="50" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="75" y2="75" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="100" y2="100" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="125" y2="125" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="175" y2="175" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="200" y2="200" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="225" y2="225" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="250" y2="250" stroke="black" stroke-width="1"/>
-                  <line x1="49%" x2="51%" y1="275" y2="275" stroke="black" stroke-width="1"/>
-              
-                  <path d="M 150 50 A 100 100 0 0 0 50 150
+              <td><a href="task.html" target="_blank">№31005</a></td>
+              <td>Вахрушев Данил Сергеевич</td>
+              <td>P3231</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <form>
+            <table class="content form_body">
+              <tr>
+                <td>Значение X:</td>
+                <td>
+                  <input
+                    class="input"
+                    id="x-cord-input"
+                    type="text"
+                    placeholder="Введите число от -5 до 3"
+                  />
+                  <div class="invalid-data hidden">Неверная координата</div>
+                </td>
+                <td rowspan="4">
+                  <svg
+                    id="graphic"
+                    view-box="0 0 300 300"
+                    width="300"
+                    height="300"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="100%" height="100%" fill="white" />
+                    <line
+                      x1="0"
+                      x2="100%"
+                      y1="50%"
+                      y2="50%"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="97%"
+                      x2="100%"
+                      y1="47%"
+                      y2="50%"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="97%"
+                      x2="100%"
+                      y1="53%"
+                      y2="50%"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+
+                    <line
+                      x1="50%"
+                      x2="50%"
+                      y1="0"
+                      y2="100%"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="47%"
+                      x2="50%"
+                      y1="3%"
+                      y2="0"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="53%"
+                      x2="50%"
+                      y1="3%"
+                      y2="0"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+
+                    <line
+                      x1="25"
+                      x2="25"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="50"
+                      x2="50"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="75"
+                      x2="75"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="100"
+                      x2="100"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="125"
+                      x2="125"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="175"
+                      x2="175"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="200"
+                      x2="200"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="225"
+                      x2="225"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="250"
+                      x2="250"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="275"
+                      x2="275"
+                      y1="51%"
+                      y2="49%"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="25"
+                      y2="25"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="50"
+                      y2="50"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="75"
+                      y2="75"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="100"
+                      y2="100"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="125"
+                      y2="125"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="175"
+                      y2="175"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="200"
+                      y2="200"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="225"
+                      y2="225"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="250"
+                      y2="250"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="49%"
+                      x2="51%"
+                      y1="275"
+                      y2="275"
+                      stroke="black"
+                      stroke-width="1"
+                    />
+
+                    <path
+                      d="M 150 50 A 100 100 0 0 0 50 150
                            L 150 200
                            L 150 150
                            L 200 150
                            L 200 50
-                           L 150 50" stroke="black" stroke-width="2" fill="green" fill-opacity="0.5"/>
-              
-                  <circle class="hidden" cx="25" cy="75" r="5" fill="red"/>
-                </svg>
-              </td>
-            </tr>
+                           L 150 50"
+                      stroke="black"
+                      stroke-width="2"
+                      fill="green"
+                      fill-opacity="0.5"
+                    />
+
+                    <circle class="hidden" cx="25" cy="75" r="5" fill="red" />
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td>Значение Y:</td>
+                <td>
+                  <select id="y-selection" class="input">
+                    <option>3</option>
+                    <option>2</option>
+                    <option>1</option>
+                    <option>0</option>
+                    <option>-1</option>
+                    <option>-2</option>
+                    <option>-3</option>
+                    <option>-4</option>
+                    <option>-5</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Значение R:</td>
+                <td>
+                  <input
+                    type="text"
+                    id="radius-input"
+                    class="input"
+                    placeholder="Введите число от 2 до 5"
+                  />
+                  <div class="invalid-data hidden">Неверный радиус</div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button type="button" id="send-form">Проверить</button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="results content hidden">
+            <caption>
+              Результаты
+            </caption>
             <tr>
-              <td>Значение Y: </td>
-              <td>
-                <select id="y-selection" class="input">
-                  <option>3</option>
-                  <option>2</option>
-                  <option>1</option>
-                  <option>0</option>
-                  <option>-1</option>
-                  <option>-2</option>
-                  <option>-3</option>
-                  <option>-4</option>
-                  <option>-5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Значение R: </td>
-              <td>
-                <input type="text" id="radius-input" class="input" placeholder="Введите число от 2 до 5"/>
-                <div class="invalid-data hidden" >Неверный радиус</div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button type="button" id='send-form'>Проверить</button>
-              </td>
+              <th>X координата</th>
+              <th>Y координата</th>
+              <th>Радиус</th>
+              <th>Текущая дата</th>
+              <th>Время выполнения скрипта</th>
+              <th>Попадание</th>
             </tr>
           </table>
-        </form>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table class="results content hidden">
-          <caption>Результаты</caption>
-          <tr>
-            <th>X координата</th>
-            <th>Y координата</th>
-            <th>Радиус</th>
-            <th>Текущая дата</th>
-            <th>Время выполнения скрипта</th>
-            <th>Попадание</th> 
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+        </td>
+      </tr>
+    </table>
 
-
-  <script src="scripts/data-validation.js"></script>
-
-</body>
+    <script src="scripts/data-validation.js"></script>
+  </body>
 </html>
